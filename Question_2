@@ -9,9 +9,7 @@ import org.openqa.selenium.interactions.Actions;
 public class Login_Automation {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stuff
-
-		
+		// TODO Auto-generated method stuff	
 		
 		WebDriver driver = null;
 		driver = new ChromeDriver ();
@@ -19,25 +17,42 @@ public class Login_Automation {
 	    driver.manage().deleteAllCookies();
 	    driver.get("chrome://settings/clearBrowserData");
 	    driver.findElement(By.xpath("//settings-ui")).sendKeys(Keys.ENTER);
-		driver.get("https://www.pos.com.my/send/ratecalculator");
+
+		//Step 1: navigate to URL
+            driver.get("https://www.pos.com.my/send/ratecalculator");
+
+            // Allow some time for the page to load
+            driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		
 		
-		//Provide username Element
-		WebElement username = driver.findElement(By.id("username"));
-		//verify username field is exist and enable and provide username input
-		username.isDisplayed();
-		username.isEnabled();
-		username.clear();
-		username.click();
-		username.sendKeys("student");
-		
-		//Actions act = new Actions(driver);
-		//act.sendKeys(search, "Arif Aiman").build().perform();
-		//act.sendKeys(Keys.ENTER);
-		//act.perform();
-	
-		//Provide password Element
-		var password = driver.findElement(By.id("password"));
+		// Step 2: User enter “Malaysia” as “From” country, and enter “35600” as the postcode
+		WebElement postcode_from = driver.findElement(By.xpath("//input[@class='form-control ng-touched ng-dirty ng-valid']"));
+		postcode_from.isEnabled();
+		postcode_from.clear();
+		postcode_from.click();
+		postcode_from.sendKeys("35600");
+
+		//Step 3: User enter “India” as “To” country, and leave the postcode empty. 
+		WebElement country = driver.findElement(By.name("country"));
+		country.isEnabled();
+		country.clear();
+		country.click();
+		country.sendKeys("India");
+		WebElement India = driver.findElement(By.id("mat-option-101"));
+		India.click();
+
+		//Step 4: User enter 1 as the “Weight”, and user press Calculate
+		WebElement weight = driver.findElement(By.xpath("//input[@placeholder='eg. 0.1kg']"));
+		weight.isDisplayed();
+		weight.isEnabled();
+		weight.clear();
+		weight.click();
+		weight.sendKeys("1");
+
+		WebElement calculate_btn = driver.findElement(By.id("//a[@type=' button']"));
+		calculate_btn.click();
+
+		//Step 5: Verify user can see multiple quotes and shipments options available.   
 				
 		//verify password field is exist and enable and provide password input
 		password.isDisplayed();
