@@ -1,0 +1,95 @@
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+
+public class Login_Automation {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stuff
+
+		
+		
+		WebDriver driver = null;
+		driver = new ChromeDriver ();
+		//delete cookies and cache
+	    driver.manage().deleteAllCookies();
+	    driver.get("chrome://settings/clearBrowserData");
+	    driver.findElement(By.xpath("//settings-ui")).sendKeys(Keys.ENTER);
+		driver.get("https://www.pos.com.my/send/ratecalculator");
+		
+		
+		//Provide username Element
+		WebElement username = driver.findElement(By.id("username"));
+		//verify username field is exist and enable and provide username input
+		username.isDisplayed();
+		username.isEnabled();
+		username.clear();
+		username.click();
+		username.sendKeys("student");
+		
+		//Actions act = new Actions(driver);
+		//act.sendKeys(search, "Arif Aiman").build().perform();
+		//act.sendKeys(Keys.ENTER);
+		//act.perform();
+	
+		//Provide password Element
+		var password = driver.findElement(By.id("password"));
+				
+		//verify password field is exist and enable and provide password input
+		password.isDisplayed();
+		password.isEnabled();
+		password.clear(); 
+		password.click();
+		password.sendKeys("Password123");
+		
+		//click login button
+		WebElement loginButton = driver.findElement(By.id("submit"));
+		loginButton.isDisplayed();
+		loginButton.isEnabled();
+		loginButton.click();
+		
+		
+		WebElement strValue = driver.findElement(By.cssSelector("#submit"));
+		String expsuccess ="Congratulations student. You successfully logged in!";
+		String actsuccess = strValue.getText();
+		
+		if (actsuccess.equals(expsuccess)) {
+			System.out.println("test is passed_1");
+		}
+		
+		else {
+			System.out.println("test is failed_1");
+		}
+		
+		//Log Out
+		//WebElement logout = driver.findElement(By.tagName("a"));
+		//logout.click();   
+		
+		WebElement logout = driver.findElement(By.xpath("//a[contains(text(),'Log out')]"));
+		logout.isDisplayed();
+		logout.isEnabled();
+		logout.click();
+		/**WebElement acttitle = driver.findElement(By.cssSelector("section[id='login'] h2"));
+		String exptitle = "Test Login";
+		String actual = acttitle.getText();
+
+		if (actual.equals(exptitle)) {
+			System.out.println("test is passed_2");
+		}
+		
+		else {
+			System.out.println("test is failed_2");
+		}**/
+		
+		
+		//quit browser
+		driver.quit();
+		
+		
+	}
+
+}
